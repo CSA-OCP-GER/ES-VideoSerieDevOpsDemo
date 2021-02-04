@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serviceLocation": {
+            "type": "string"
+        },
+        "serviceName": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+            {
+            "name": "[concat('sa',parameters('serviceName'))]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "displayName": "[concat('sa',parameters('serviceName'))]"
+            },
+            "properties": {
+                "accountType": "Standard_LRS"
+            }
+            }
+        ],
+    "outputs": {
+    }
+}

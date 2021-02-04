@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serviceName": {
+      "type": "string"
+    },
+    "serviceLocation": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-06-01",
+      "name": "[concat('rg-',parameters('serviceName'),'-hp-prod')]",
+      "location": "[parameters('serviceLocation')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-06-01",
+      "name": "[concat('rg-',parameters('serviceName'),'-backend-prod')]",
+      "location": "[parameters('serviceLocation')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-06-01",
+      "name": "[concat('rg-',parameters('serviceName'),'-shared-prod')]",
+      "location": "[parameters('serviceLocation')]",
+      "properties": {}
+    },
+    {
+        "name": "[concat('nesteddeploy-',parameters('serviceName'),'shared-prod')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "resourceGroup": "[concat('rg-',parameters('serviceName'),'shared-prod')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'shared-prod'))]"
+        ],
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "uri": "[concat('https://github.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo', '/shared/azuredeploy.json')]",
+                "contentVersion": "1.0.0.0"
+            },
+        "parameters": {
+                "servcieLocation": {
+                "value": "[parameters('serviceLocation')]"
+                },
+                "serviceName": {
+                    "value": "[parameters('serviceName')]"
+                }
+            }
+        }
+    }
+    ],
+  "outputs": {}
+}
