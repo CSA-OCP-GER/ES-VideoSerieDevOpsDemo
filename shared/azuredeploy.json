@@ -12,16 +12,34 @@
     "variables": {},
     "resources": [
             {
-            "name": "[concat('sa',parameters('serviceName'))]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2015-06-15",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "displayName": "[concat('sa',parameters('serviceName'))]"
-            },
-            "properties": {
-                "accountType": "Standard_LRS"
-            }
+                "name": "[concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod-001')]",
+                "type": "Microsoft.Network/virtualNetworks",
+                "apiVersion": "2018-08-01",
+                "location": "[resourceGroup().location]",
+                "tags": {
+                    "displayName": "vnet-[concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod')]"
+                },
+                "properties": {
+                    "addressSpace": {
+                        "addressPrefixes": [
+                            "10.0.0.0/16"
+                        ]
+                    },
+                    "subnets": [
+                        {
+                            "name": "[concat('snet-',parameters('serviceName'),'-','hostpool-prod-001')]",
+                            "properties": {
+                                "addressPrefix": "10.0.1.0/24"
+                            }
+                        },
+                        {
+                            "name": "[concat('snet-',parameters('serviceName'),'-backend-prod-001')]",
+                            "properties": {
+                                "addressPrefix": "10.0.2.0/24"
+                            }
+                        }
+                    ]
+                }
             }
         ],
     "outputs": {
