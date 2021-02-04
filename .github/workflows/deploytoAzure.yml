@@ -35,7 +35,7 @@ jobs:
         with:
           scope: subscription
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          region: ${{ secrets.AZRUE_REGION}}
+          region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
           parameters: ./azuredeploy.parameters.json
 
