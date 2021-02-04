@@ -33,21 +33,21 @@
       "properties": {}
     },
     {
-        "name": "[concat('nesteddeploy-',parameters('serviceName'),'shared-prod')]",
+        "name": "[concat('nesteddeploy-',parameters('serviceName'),'-shared-prod')]",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2020-06-01",
-        "resourceGroup": "[concat('rg-',parameters('serviceName'),'shared-prod')]",
+        "resourceGroup": "[concat('rg-',parameters('serviceName'),'-shared-prod')]",
         "dependsOn": [
-            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'shared-prod'))]"
+            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-shared-prod'))]"
         ],
         "properties": {
             "mode": "Incremental",
             "templateLink": {
-                "uri": "[concat('https://github.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo', '/shared/azuredeploy.json')]",
+                "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/shared/azuredeploy.json')]",
                 "contentVersion": "1.0.0.0"
             },
         "parameters": {
-                "servcieLocation": {
+                "serviceLocation": {
                 "value": "[parameters('serviceLocation')]"
                 },
                 "serviceName": {
