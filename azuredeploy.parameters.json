@@ -11,6 +11,5 @@
         "serviceIPRangePrefix": {
             "value": "10.10."
         }
-        }
     }
 }
