@@ -23,7 +23,7 @@
                 "apiVersion": "2018-08-01",
                 "location": "[resourceGroup().location]",
                 "tags": {
-                    "displayName": "vnet-[concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod')]"
+                    "displayName": "[concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod')]"
                 },
                 "properties": {
                     "addressSpace": {
