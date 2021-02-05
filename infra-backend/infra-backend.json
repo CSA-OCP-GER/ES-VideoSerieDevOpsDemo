@@ -60,7 +60,7 @@
                        }
                    ],
                     "networkSecurityGroup": {
-                         "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-rdpallow-001')]"
+                         "id": "[resourceId(concat('rg-',parameters('serviceName'),'-shared-prod'),'Microsoft.Network/networkSecurityGroups', 'nsg-rdpallow-001')]"
                     }
                }
            },
