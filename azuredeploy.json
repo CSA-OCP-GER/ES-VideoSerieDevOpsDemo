@@ -63,6 +63,34 @@
             
             }
         }
+    },
+    {
+        "name": "[concat('nesteddeploy-',parameters('serviceName'),'-backend-prod')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "resourceGroup": "[concat('rg-',parameters('serviceName'),'-backend-prod')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-backend-prod'))]"
+        ],
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-backend/infra-backend.json')]",
+                "contentVersion": "1.0.0.0"
+            },
+        "parameters": {
+                "serviceLocation": {
+                "value": "[parameters('serviceLocation')]"
+                },
+                "serviceName": {
+                    "value": "[parameters('serviceName')]"
+                },
+                  "serviceIPRangePrefix": {
+                    "value": "[parameters('serviceIPRangePrefix')]"
+                }
+            
+            }
+        }
     }
     ],
   "outputs": {}
