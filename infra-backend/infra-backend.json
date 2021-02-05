@@ -39,9 +39,8 @@
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",
                "dependsOn": [
-                   "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'),'-PublicIP'))]",
-                   "[resourceId('Microsoft.Network/virtualNetworks', concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod-001'))]"
-               ],
+                   "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'),'-PublicIP'))]"
+                  ],
                "tags": {
                    "displayName": "[concat(variables('vmName'),' Network Interface')]"
                },
