@@ -46,7 +46,31 @@
                         }
                     ]
                 }
-            }
+            },
+            {
+               "name": "nsg-rdpallow-001",
+               "type": "Microsoft.Network/networkSecurityGroups",
+               "apiVersion": "2018-08-01",
+               "location": "[resourceGroup().location]",
+               "properties": {
+                   "securityRules": [
+                       {
+                           "name": "nsgRDPRule",
+                           "properties": {
+                               "description": "description",
+                               "protocol": "Tcp",
+                               "sourcePortRange": "*",
+                               "destinationPortRange": "3389",
+                               "sourceAddressPrefix": "*",
+                               "destinationAddressPrefix": "*",
+                               "access": "Allow",
+                               "priority": 100,
+                               "direction": "Inbound"
+                           }
+                       }
+                   ]
+               }
+           }
         ],
     "outputs": {
     }
