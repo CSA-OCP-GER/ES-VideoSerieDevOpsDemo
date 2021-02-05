@@ -35,13 +35,13 @@
                         {
                             "name": "[concat('snet-',parameters('serviceName'),'-','hostpool-prod-001')]",
                             "properties": {
-                                "addressPrefix": "[concat(parameters('serviceIPRangePrefix'),'1.0./24')]"
+                                "addressPrefix": "[concat(parameters('serviceIPRangePrefix'),'1.0/24')]"
                             }
                         },
                         {
                             "name": "[concat('snet-',parameters('serviceName'),'-backend-prod-001')]",
                             "properties": {
-                                "addressPrefix": "[concat(parameters('serviceIPRangePrefix'),'2.0./24')]"
+                                "addressPrefix": "[concat(parameters('serviceIPRangePrefix'),'2.0/24')]"
                             }
                         }
                     ]
