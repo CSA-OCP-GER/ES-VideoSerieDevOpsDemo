@@ -7,6 +7,10 @@
         },
         "serviceLocation": {
             "value": "westeurope" // TODO: Fill in parameter value
+        },
+        "serviceIPRangePrefix": {
+            "value": "10.10."
+        }
         }
     }
 }
