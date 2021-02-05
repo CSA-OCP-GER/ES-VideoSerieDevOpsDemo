@@ -14,7 +14,7 @@
 
     },
     "variables": {
-        "vmName" : "VM01"
+        "vmName" : "VMAPP01"
     },
     "resources": [
             {
