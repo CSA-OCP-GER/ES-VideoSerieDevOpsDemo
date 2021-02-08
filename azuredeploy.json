@@ -10,7 +10,10 @@
     },
     "serviceIPRangePrefix": {
       "type": "string"
-  }
+    },
+    "localAdminPWD": {
+      "type": "securestring"
+    }
 
   },
   "variables": {},
@@ -87,8 +90,10 @@
                 },
                   "serviceIPRangePrefix": {
                     "value": "[parameters('serviceIPRangePrefix')]"
+                },
+                "localAdminPWD": {
+                  "value": "[parameters('localAdminPWD')]"
                 }
-            
             }
         }
     }
