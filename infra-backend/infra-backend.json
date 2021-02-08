@@ -81,8 +81,8 @@
                    },
                    "osProfile": {
                        "computerName": "[variables('vmName')]",
-                       "adminUsername": "adminUsername",
-                       "adminPassword": "adminPassword"
+                       "adminUsername": "superadmin",
+                       "adminPassword": "Pass@word!123"
                    },
                    "storageProfile": {
                        "imageReference": {
