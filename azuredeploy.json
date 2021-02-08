@@ -50,7 +50,7 @@
         "properties": {
             "mode": "Incremental",
             "templateLink": {
-                "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-shared/infra-shared.json')]",
+               "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-shared/infra-shared.json')]",
                 "contentVersion": "1.0.0.0"
             },
         "parameters": {
