@@ -54,7 +54,7 @@
                                    "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('vmName'),'-PublicIP'))]"
                                },
                                "subnet": {
-                                   "id": "[resourceId(concat('rg-',parameters('serviceName'),'-shared-prod'),'Microsoft.Network/virtualNetworks/subnets',concat('vnet-',parameters('serviceName'),parameters('serviceLocation'),'prod-001') ,concat('snet-',parameters('serviceName'),'-backend-prod-001'))]"
+                                   "id": "[resourceId(concat('rg-',parameters('serviceName'),'-shared-prod'),'Microsoft.Network/virtualNetworks/subnets',concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod-001') ,concat('snet-',parameters('serviceName'),'-backend-prod-001'))]"
                                }
                            }
                        }
