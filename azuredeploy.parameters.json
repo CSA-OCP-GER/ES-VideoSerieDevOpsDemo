@@ -10,7 +10,6 @@
         },
         "serviceIPRangePrefix": {
             "value": "10.10."
-        },
-        "defaultadmuser"
+        }
     }
 }
