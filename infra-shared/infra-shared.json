@@ -70,6 +70,69 @@
                        }
                    ]
                }
+           },
+           {
+               "type": "Microsoft.KeyVault/vaults",
+               "apiVersion": "2018-02-14",
+               "name": "[concat('kv-YAAC-',parameters('serviceName'),'-prod-01')]",
+               "location": "[resourceGroup().location]",
+               "tags": {
+                   "displayName": "[concat('kv-YAAC-',parameters('serviceName'),'-prod')]"
+               },
+               "properties": {
+                   "enabledForDeployment": true,
+                   "enabledForTemplateDeployment": true,
+                   "enabledForDiskEncryption": true,
+                   "tenantId": "b46ac4c7-2123-44f3-bfe7-9790b5ac8a18",
+                   "accessPolicies": [
+                       {
+                           "tenantId": "b46ac4c7-2123-44f3-bfe7-9790b5ac8a18",
+                           "objectId": "a17ab816-fd9a-4fc0-808a-3059c8ac5719",
+                           "permissions": {
+                               "keys": [
+                                   "Get" 
+                                ],
+                               "secrets": [
+                                   "List",
+                                   "Get",
+                                   "Set"
+                               ]
+                          }
+                       },
+                       {
+                           "tenantId": "b46ac4c7-2123-44f3-bfe7-9790b5ac8a18",
+                           "objectId": "260ac6e2-f1e3-466e-84d6-6a1aba844b5b",
+                           "permissions": {
+                               "keys": [
+                                   "Get" 
+                                ],
+                               "secrets": [
+                                   "List",
+                                   "Get",
+                                   "Set"
+                               ]
+                          }
+                       }
+                       
+                   ],
+                   "sku": {
+                       "name": "standard",
+                       "family": "A"
+                   }
+               },
+               "resources": [
+                   {
+                       "type": "secrets",
+                       "name": "localwinadmin",
+                               "apiVersion": "2016-10-01",
+                       "dependsOn": [
+                           "[resourceId('Microsoft.KeyVault/vaults', concat('kv-YAAC-',parameters('serviceName'),'-prod-01'))]"
+                       ],
+                       "properties": {
+                           "value": "Pass@word!123"
+                       }
+                   }
+               ]
            }
         ],
     "outputs": {
