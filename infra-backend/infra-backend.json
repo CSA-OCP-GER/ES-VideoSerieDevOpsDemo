@@ -10,8 +10,10 @@
         },
         "serviceIPRangePrefix": {
             "type": "string"
+        },
+        "localAdminPWD":  {
+            "type": "securestring"
         }
-
     },
     "variables": {
         "vmName" : "VMAPP01"
@@ -82,7 +84,7 @@
                    "osProfile": {
                        "computerName": "[variables('vmName')]",
                        "adminUsername": "superadmin",
-                       "adminPassword": "Pass@word!123"
+                       "adminPassword": "[parameters('localAdminPWD')]"
                    },
                    "storageProfile": {
                        "imageReference": {
