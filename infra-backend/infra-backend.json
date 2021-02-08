@@ -44,7 +44,7 @@
                    "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'),'-PublicIP'))]"
                   ],
                "tags": {
-                   "displayName": "[concat(variables('vmName'),' Network Interface')]"
+                   "displayName": "[concat(variables('vmName'),' Network Interface Try')]"
                },
                "properties": {
                    "ipConfigurations": [
