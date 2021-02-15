@@ -1,0 +1,33 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Azure login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: deploy to Azure
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          region: ${{ secrets.AZURE_REGION}}
+          template: ./azuredeploy.json
+          parameters: >
+            serviceName=WVD
+            serviceLocation=westeurope
+            serviceIPRangePrefix=10.10.
+            localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
