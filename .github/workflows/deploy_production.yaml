@@ -33,5 +33,5 @@ jobs:
 
       - name: Run integration tests after deploy
         run: |
-          IP=$(az vm show -d -g RG-WVD-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          IP=$(az vm show -d -g RG-WVD-backend -n VMAPP01 --query publicIps -o tsv)
           nc -zv $IP 3389
