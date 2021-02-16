@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
       - name: Azure login
         uses: Azure/login@v1
         with:
@@ -26,7 +29,7 @@ jobs:
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
           parameters: >
-            serviceName=${{ github.ref }}
+            serviceName=${{ env.GITHUB_REF_SLUG }}
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
@@ -41,7 +44,7 @@ jobs:
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
           parameters: >
-            serviceName=${{ github.ref }}
+            serviceName=${{ env.GITHUB_REF_SLUG }}
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
