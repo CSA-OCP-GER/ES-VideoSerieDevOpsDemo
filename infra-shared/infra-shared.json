@@ -74,10 +74,10 @@
            {
                "type": "Microsoft.KeyVault/vaults",
                "apiVersion": "2018-02-14",
-               "name": "[uniqueString(parameters('serviceName'))]",
+               "name": "[uniqueString(resourceGroup().id, parameters('serviceName'))]",
                "location": "[resourceGroup().location]",
                "tags": {
-                   "displayName": "[uniqueString(parameters('serviceName'))]"
+                   "displayName": "[uniqueString(resourceGroup().id, parameters('serviceName'))]"
                },
                "properties": {
                    "enabledForDeployment": true,
@@ -126,7 +126,7 @@
                        "name": "localwinadmin",
                                "apiVersion": "2016-10-01",
                        "dependsOn": [
-                           "[resourceId('Microsoft.KeyVault/vaults', uniqueString(parameters('serviceName')))]"
+                           "[resourceId('Microsoft.KeyVault/vaults', uniqueString(resourceGroup().id, parameters('serviceName')))]"
                        ],
                        "properties": {
                            "value": "Pass@word!123"
