@@ -63,6 +63,7 @@ jobs:
           nc -zv $IP 3389
 
       - name: Cleanup the environment
+        if: ${{ always() }}
         run: |
           az group delete -n rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend-prod --yes
           az group delete -n rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp-prod --yes
