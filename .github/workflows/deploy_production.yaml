@@ -31,3 +31,8 @@ jobs:
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
+
+      - name: Run integration tests after deploy
+        run: |
+          IP=$(az vm show -d -g RG-WVD-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          nc -zv $IP 3389
