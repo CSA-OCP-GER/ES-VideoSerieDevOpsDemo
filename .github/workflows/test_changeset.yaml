@@ -37,7 +37,9 @@ jobs:
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
 
       - name: Run integration tests before update
-        run: echo ✅
+        run: |
+          IP=$(az vm show -d -g RG-FEATURES-PULL-REQUEST-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          nc -zv $IP 3389
 
       - name: Checkout pull request
         uses: actions/checkout@v2
@@ -56,7 +58,9 @@ jobs:
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
 
       - name: Run integration tests again after update
-        run: echo ✅
+        run: |
+          IP=$(az vm show -d -g RG-FEATURES-PULL-REQUEST-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          nc -zv $IP 3389
 
       - name: Cleanup the environment
         run: |
