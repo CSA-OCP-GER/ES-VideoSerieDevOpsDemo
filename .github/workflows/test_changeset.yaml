@@ -1,0 +1,48 @@
+name: Test pull request to main
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Azure login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: deploy to Azure
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          region: ${{ secrets.AZURE_REGION}}
+          template: ./azuredeploy.json
+          parameters: >
+            serviceName=${{ github.ref }}
+            serviceLocation=westeurope
+            serviceIPRangePrefix=10.10.
+            localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
+
+      - uses: actions/checkout@v2
+
+      - name: deploy to Azure
+        uses: Azure/arm-deploy@v1
+        with:
+          scope: subscription
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          region: ${{ secrets.AZURE_REGION}}
+          template: ./azuredeploy.json
+          parameters: >
+            serviceName=${{ github.ref }}
+            serviceLocation=westeurope
+            serviceIPRangePrefix=10.10.
+            localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
