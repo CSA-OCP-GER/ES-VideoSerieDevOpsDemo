@@ -57,3 +57,9 @@ jobs:
 
       - name: Run integration tests again after update
         run: echo ✅
+
+      - name: Cleanup the environment
+        run: |
+          az group delete -n rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend-prod --yes
+          az group delete -n rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp-prod --yes
+          az group delete -n rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared-prod --yes
