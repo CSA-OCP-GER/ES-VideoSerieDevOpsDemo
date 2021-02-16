@@ -38,7 +38,7 @@ jobs:
 
       - name: Run integration tests before update
         run: |
-          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend -n VMAPP01 --query publicIps -o tsv)
           nc -zv $IP 3389
 
       - name: Checkout pull request
@@ -59,12 +59,12 @@ jobs:
 
       - name: Run integration tests again after update
         run: |
-          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend -n VMAPP01 --query publicIps -o tsv)
           nc -zv $IP 3389
 
       - name: Cleanup the environment
         if: ${{ always() }}
         run: |
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend-prod --yes --no-wait
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp-prod --yes --no-wait
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared-prod --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared --yes --no-wait
