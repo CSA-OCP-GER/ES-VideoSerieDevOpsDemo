@@ -17,7 +17,7 @@
     },
     "resources": [
             {
-               "name": "[concat(parameters('serviceName'), variables('vmName'),'-PublicIP')]",
+               "name": "[concat(parameters('serviceName'), '-', variables('vmName'),'-PublicIP')]",
                "type": "Microsoft.Network/publicIPAddresses",
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",
@@ -38,7 +38,7 @@
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",
                "dependsOn": [
-                   "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('vmName'),'-PublicIP'))]"
+                   "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('serviceName'), '-', variables('vmName'),'-PublicIP'))]"
                   ],
                "tags": {
                    "displayName": "[concat(variables('vmName'),' Network Interface Try')]"
@@ -50,7 +50,7 @@
                            "properties": {
                                "privateIPAllocationMethod": "Dynamic",
                                "publicIPAddress": {
-                                   "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('vmName'),'-PublicIP'))]"
+                                   "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('serviceName'), '-', variables('vmName'),'-PublicIP'))]"
                                },
                                "subnet": {
                                    "id": "[resourceId(concat('rg-',parameters('serviceName'),'-shared-prod'),'Microsoft.Network/virtualNetworks/subnets',concat('vnet-',parameters('serviceName'),'-',parameters('serviceLocation'),'prod-001') ,concat('snet-',parameters('serviceName'),'-backend-prod-001'))]"
