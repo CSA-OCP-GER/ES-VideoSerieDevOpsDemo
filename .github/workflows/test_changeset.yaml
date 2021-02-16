@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: testing
 
     steps:
       - name: Inject slug/short variables
@@ -17,11 +18,12 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - uses: actions/checkout@v2
+      - name: Checkout main branch
+        uses: actions/checkout@v2
         with:
           ref: main
 
-      - name: deploy to Azure
+      - name: Deploy current main branch to Azure
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
@@ -29,14 +31,20 @@ jobs:
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
           parameters: >
-            serviceName=${{ env.GITHUB_REF_SLUG }}
+            serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
 
-      - uses: actions/checkout@v2
+      - name: Run integration tests before update
+        run: |
+          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          nc -zv $IP 3389
 
-      - name: deploy to Azure
+      - name: Checkout pull request
+        uses: actions/checkout@v2
+
+      - name: Deploy changes to Azure
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
@@ -44,7 +52,19 @@ jobs:
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
           parameters: >
-            serviceName=${{ env.GITHUB_REF_SLUG }}
+            serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
+
+      - name: Run integration tests again after update
+        run: |
+          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-BACKEND-PROD -n VMAPP01 --query publicIps -o tsv)
+          nc -zv $IP 3389
+
+      - name: Cleanup the environment
+        if: ${{ always() }}
+        run: |
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend-prod --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp-prod --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared-prod --yes --no-wait
