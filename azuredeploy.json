@@ -88,6 +88,9 @@
                 "serviceName": {
                     "value": "[parameters('serviceName')]"
                 },
+                  "serviceIPRangePrefix": {
+                    "value": "[parameters('serviceIPRangePrefix')]"
+                },
                 "localAdminPWD": {
                   "value": "[parameters('localAdminPWD')]"
                 }
