@@ -8,9 +8,6 @@
         "serviceName": {
             "type": "string"
         },
-        "serviceIPRangePrefix": {
-            "type": "string"
-        },
         "localAdminPWD":  {
             "type": "securestring"
         }
@@ -20,7 +17,7 @@
     },
     "resources": [
             {
-               "name": "[concat(variables('vmName'),'-PublicIP')]",
+               "name": "[concat(parameters('serviceName'), variables('vmName'),'-PublicIP')]",
                "type": "Microsoft.Network/publicIPAddresses",
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",

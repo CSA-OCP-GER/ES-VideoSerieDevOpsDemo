@@ -31,7 +31,6 @@ jobs:
           parameters: >
             serviceName=${{ env.GITHUB_REF_SLUG }}
             serviceLocation=westeurope
-            serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
 
       - uses: actions/checkout@v2
@@ -46,5 +45,4 @@ jobs:
           parameters: >
             serviceName=${{ env.GITHUB_REF_SLUG }}
             serviceLocation=westeurope
-            serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}

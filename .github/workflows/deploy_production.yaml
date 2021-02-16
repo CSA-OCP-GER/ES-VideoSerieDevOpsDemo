@@ -29,5 +29,4 @@ jobs:
           parameters: >
             serviceName=WVD
             serviceLocation=westeurope
-            serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
