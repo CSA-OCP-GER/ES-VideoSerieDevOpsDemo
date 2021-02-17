@@ -67,6 +67,6 @@ jobs:
       - name: Cleanup the environment
         if: ${{ always() }}
         run: |
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend --yes --no-wait
           az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend --yes
           az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared --yes --no-wait
