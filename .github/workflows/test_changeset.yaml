@@ -30,6 +30,7 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
+          deploymentMode: Complete
           parameters: >
             serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
             serviceLocation=westeurope
@@ -51,6 +52,7 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
+          deploymentMode: Complete
           parameters: >
             serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
             serviceLocation=westeurope
