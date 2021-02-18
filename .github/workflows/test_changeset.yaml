@@ -1,7 +1,7 @@
 name: Test pull request to main
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -44,6 +44,8 @@ jobs:
 
       - name: Checkout pull request
         uses: actions/checkout@v2
+        with:
+          ref: $${{ github.ref }}
 
       - name: Deploy changes to Azure
         uses: Azure/arm-deploy@v1
