@@ -25,7 +25,6 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
-          deploymentMode: Complete
           parameters: >
             serviceName=WVD
             serviceLocation=westeurope
