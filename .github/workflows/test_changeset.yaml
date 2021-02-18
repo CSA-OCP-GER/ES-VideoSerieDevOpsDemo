@@ -1,7 +1,7 @@
 name: Test pull request to main
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -23,28 +23,6 @@ jobs:
         with:
           ref: main
 
-      - name: Deploy current main branch to Azure
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: subscription
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          region: ${{ secrets.AZURE_REGION}}
-          template: ./azuredeploy.json
-          deploymentMode: Complete
-          parameters: >
-            serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
-            serviceLocation=westeurope
-            serviceIPRangePrefix=10.10.
-            localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
-
-      - name: Run integration tests before update
-        run: |
-          IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend -n VMAPP01 --query publicIps -o tsv)
-          nc -zv $IP 3389
-
-      - name: Checkout pull request
-        uses: actions/checkout@v2
-
       - name: Deploy changes to Azure
         uses: Azure/arm-deploy@v1
         with:
@@ -52,14 +30,13 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           region: ${{ secrets.AZURE_REGION}}
           template: ./azuredeploy.json
-          deploymentMode: Complete
           parameters: >
             serviceName=${{ env.GITHUB_HEAD_REF_SLUG_URL }}
             serviceLocation=westeurope
             serviceIPRangePrefix=10.10.
             localAdminPWD=${{ secrets.LOCAL_WINDOWS_ADMIN_PASSWORD }}
 
-      - name: Run integration tests again after update
+      - name: Run integration tests
         run: |
           IP=$(az vm show -d -g RG-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend -n VMAPP01 --query publicIps -o tsv)
           nc -zv $IP 3389
@@ -67,6 +44,6 @@ jobs:
       - name: Cleanup the environment
         if: ${{ always() }}
         run: |
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-hp --yes
           az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-backend --yes
-          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared --yes --no-wait
+          az group delete -g rg-${{ env.GITHUB_HEAD_REF_SLUG_URL }}-shared --yes
