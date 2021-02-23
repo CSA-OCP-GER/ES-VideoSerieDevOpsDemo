@@ -1,23 +1,23 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "serviceName": {
-      "value": "WVD" // TODO: Fill in parameter value
-    },
-    "serviceLocation": {
-      "value": "westeurope" // TODO: Fill in parameter value
-    },
-    "serviceIPRangePrefix": {
-      "value": "10.10."
-    },
-    "localAdminPWD": {
-      "reference": {
-        "keyVault": {
-          "id": "/subscriptions/76c9af94-ff5d-4bbe-8e7b-228db3bd1804/resourcegroups/rg-WVD-shared/providers/Microsoft.KeyVault/vaults/kv-YAAC-WVD-prod-01"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serviceName": {
+            "value": "WVD" // TODO: Fill in parameter value
         },
-        "secretName": "localwinadmin"
-      }
+        "serviceLocation": {
+            "value": "westeurope" // TODO: Fill in parameter value
+        },
+        "serviceIPRangePrefix": {
+            "value": "10.10."
+        },
+        "localAdminPWD":{
+            "reference": {
+                    "keyVault" :{
+                        "id": "/subscriptions/76c9af94-ff5d-4bbe-8e7b-228db3bd1804/resourcegroups/rg-WVD-shared-prod/providers/Microsoft.KeyVault/vaults/kv-YAAC-WVD-prod-01"
+                    },
+                    "secretName": "localwinadmin"
+                }
+            }
     }
-  }
 }

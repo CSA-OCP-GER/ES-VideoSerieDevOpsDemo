@@ -14,87 +14,89 @@
     "localAdminPWD": {
       "type": "securestring"
     }
+
   },
   "variables": {},
   "resources": [
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-06-01",
-      "name": "[concat('rg-',parameters('serviceName'),'-hp')]",
+      "name": "[concat('rg-',parameters('serviceName'),'-hp-prod')]",
       "location": "[parameters('serviceLocation')]",
       "properties": {}
     },
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-06-01",
-      "name": "[concat('rg-',parameters('serviceName'),'-backend')]",
+      "name": "[concat('rg-',parameters('serviceName'),'-backend-prod')]",
       "location": "[parameters('serviceLocation')]",
       "properties": {}
     },
     {
       "type": "Microsoft.Resources/resourceGroups",
       "apiVersion": "2020-06-01",
-      "name": "[concat('rg-',parameters('serviceName'),'-shared')]",
+      "name": "[concat('rg-',parameters('serviceName'),'-shared-prod')]",
       "location": "[parameters('serviceLocation')]",
       "properties": {}
     },
     {
-      "name": "[concat('nesteddeploy-',parameters('serviceName'),'-shared')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
-      "resourceGroup": "[concat('rg-',parameters('serviceName'),'-shared')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-shared'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-shared/infra-shared.json')]",
-          "contentVersion": "1.0.0.0"
-        },
+        "name": "[concat('nesteddeploy-',parameters('serviceName'),'-shared-prod')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "resourceGroup": "[concat('rg-',parameters('serviceName'),'-shared-prod')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-shared-prod'))]"
+        ],
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+               "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-shared/infra-shared.json')]",
+                "contentVersion": "1.0.0.0"
+            },
         "parameters": {
-          "serviceLocation": {
-            "value": "[parameters('serviceLocation')]"
-          },
-          "serviceName": {
-            "value": "[parameters('serviceName')]"
-          },
-          "serviceIPRangePrefix": {
-            "value": "[parameters('serviceIPRangePrefix')]"
-          }
+                "serviceLocation": {
+                "value": "[parameters('serviceLocation')]"
+                },
+                "serviceName": {
+                    "value": "[parameters('serviceName')]"
+                },
+                  "serviceIPRangePrefix": {
+                    "value": "[parameters('serviceIPRangePrefix')]"
+                }
+            
+            }
         }
-      }
     },
     {
-      "name": "[concat('nesteddeploy-',parameters('serviceName'),'-backend')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2020-06-01",
-      "resourceGroup": "[concat('rg-',parameters('serviceName'),'-backend')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-backend'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-backend/infra-backend.json')]",
-          "contentVersion": "1.0.0.0"
-        },
+        "name": "[concat('nesteddeploy-',parameters('serviceName'),'-backend-prod')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "resourceGroup": "[concat('rg-',parameters('serviceName'),'-backend-prod')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Resources/resourceGroups/',  concat('rg-',parameters('serviceName'),'-backend-prod'))]"
+        ],
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "uri": "[concat('https://raw.githubusercontent.com/CSA-OCP-GER/ES-VideoSerieDevOpsDemo/main', '/infra-backend/infra-backend.json')]",
+                "contentVersion": "1.0.0.0"
+            },
         "parameters": {
-          "serviceLocation": {
-            "value": "[parameters('serviceLocation')]"
-          },
-          "serviceName": {
-            "value": "[parameters('serviceName')]"
-          },
-          "serviceIPRangePrefix": {
-            "value": "[parameters('serviceIPRangePrefix')]"
-          },
-          "localAdminPWD": {
-            "value": "[parameters('localAdminPWD')]"
-          }
+                "serviceLocation": {
+                "value": "[parameters('serviceLocation')]"
+                },
+                "serviceName": {
+                    "value": "[parameters('serviceName')]"
+                },
+                  "serviceIPRangePrefix": {
+                    "value": "[parameters('serviceIPRangePrefix')]"
+                },
+                "localAdminPWD": {
+                  "value": "[parameters('localAdminPWD')]"
+                }
+            }
         }
-      }
     }
-  ],
+    ],
   "outputs": {}
 }
